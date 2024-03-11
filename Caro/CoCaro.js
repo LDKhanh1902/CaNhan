@@ -1,13 +1,12 @@
-
-let check = 'x';
+let check = true;
 let Length = 30;
-let quantity_square_height = Math.floor((screen.height - 250) / Length);
-let quantity_square_width = Math.floor((screen.width - 150) / Length);
+let quantity_square_height = Math.floor((screen.height - Math.round(screen.height*33/100)) / Length);
+let quantity_square_width = Math.floor((screen.width - Math.round(screen.width * 10 / 100)) / Length);
 
 const Caro = {
     init: {
         BanCo: () => {
-         
+
             for (let i = 0; i < quantity_square_height; i++) {
                 for (let j = 0; j < quantity_square_width; j++) {
                     let element = document.createElement('div');
@@ -93,7 +92,29 @@ const Caro = {
             else {
                 array[array.length - 1].textContent = '';
                 array.pop();
+                check = !check;
             }
+        },
+
+        veX_O: (element) => {
+
+            if (element.textContent == '') {
+                if (check) {
+                    element.style.color = 'Red';
+                    element.innerHTML = 'X';
+                }
+                else {
+                    element.style.color = 'Blue';
+                    element.innerHTML = 'O';
+                }
+                check = !check;
+            }
+
+            Caro.Processor.ArrayRedo.push(element);
+            Caro.Processor.kiemTraDuongCheoChinh(Caro.Processor.ArrayChess());
+            Caro.Processor.kiemTraDuongCheoPhu(Caro.Processor.ArrayChess());
+            Caro.Processor.kiemTraCot(Caro.Processor.ArrayChess());
+            Caro.Processor.kiemTraHang(Caro.Processor.ArrayChess());
         }
         ,
 
@@ -107,30 +128,9 @@ const Caro = {
                         array[i][j].textContent == array[i + 4][j + 4].textContent)
                         for (let n = 0; n < 5; n++) {
                             array[i + n][j + n].style.backgroundColor = 'orange';
-                            Caro.Processor.gameOver(Caro.Processor.ArrayChess());
+                            if (n == 0)
+                                Caro.Processor.gameOver(Caro.Processor.ArrayChess(), array[i][j]);
                         }
-        },
-
-        veX_O: (element) => {
-            let Id = element.id;
-            let Square = document.getElementById(Id);
-
-            if (Square.textContent == '')
-                if (check == 'o') {
-                    Square.style.color = 'red';
-                    Square.innerHTML = 'X';
-                    check = 'x';
-                }
-                else {
-                    Square.style.color = 'blue';
-                    Square.innerHTML = 'O';
-                    check = 'o';
-                }
-            Caro.Processor.ArrayRedo.push(element);
-            Caro.Processor.kiemTraDuongCheoChinh(Caro.Processor.ArrayChess());
-            Caro.Processor.kiemTraDuongCheoPhu(Caro.Processor.ArrayChess());
-            Caro.Processor.kiemTraCot(Caro.Processor.ArrayChess());
-            Caro.Processor.kiemTraHang(Caro.Processor.ArrayChess());
         }
         ,
         kiemTraHang: (array) => {
@@ -143,7 +143,8 @@ const Caro = {
                         array[i][j].textContent == array[i][j + 4].textContent)
                         for (let n = 0; n < 5; n++) {
                             array[i][j + n].style.backgroundColor = 'orange';
-                            Caro.Processor.gameOver(Caro.Processor.ArrayChess());
+                            if (n == 0)
+                                Caro.Processor.gameOver(Caro.Processor.ArrayChess(), array[i][j]);
                         }
         },
 
@@ -157,7 +158,8 @@ const Caro = {
                         array[i][j].textContent == array[i + 4][j].textContent)
                         for (let n = 0; n < 5; n++) {
                             array[i + n][j].style.backgroundColor = 'orange';
-                            Caro.Processor.gameOver(Caro.Processor.ArrayChess());
+                            if (n == 0)
+                                Caro.Processor.gameOver(Caro.Processor.ArrayChess(), array[i][j]);
                         }
                 }
         },
@@ -172,7 +174,8 @@ const Caro = {
                         array[i][j].textContent == array[i + 4][j - 4].textContent)
                         for (let n = 0; n < 5; n++) {
                             array[i + n][j - n].style.backgroundColor = 'orange';
-                            Caro.Processor.gameOver(Caro.Processor.ArrayChess());
+                            if (n == 0)
+                                Caro.Processor.gameOver(Caro.Processor.ArrayChess(), array[i][j]);
                         }
                 }
         },
@@ -182,9 +185,12 @@ const Caro = {
                 for (let j = 0; j < array[0].length; j++) {
                     array[i][j].onclick = () => { Caro.Processor.veX_O(array[i][j]) };
                 }
+            check = true;
+            
         },
 
-        gameOver: (array) => {
+        gameOver: (array, element) => {
+            Caro.Processor.thongBaoChienThang(element)
             for (let i = 0; i < array.length; i++)
                 for (let j = 0; j < array[0].length; j++) {
                     array[i][j].onclick = () => { };
@@ -207,10 +213,38 @@ const Caro = {
                 if (title[i].textContent != ' ') {
                     let color = arraycolor[Math.floor(Math.random() * arraycolor.length)];
                     title[i].style.color = color;
-                    title[i].style.position = 'relative';   
+                    title[i].style.position = 'relative';
                     arraycolor.splice(arraycolor.indexOf(color), 1);
                 }
             }
+        },
+        thongBaoChienThang: (element) => {
+            let messenge = document.createElement('div');
+            messenge.style.display = 'grid';
+            messenge.id = 'messenge';
+            messenge.textContent = `${element.style.color} win`;
+            messenge.style.color = `${element.style.color}`
+            messenge.style.position = 'absolute';
+            messenge.style.fontFamily = 'Forte';
+            messenge.style.backgroundColor = 'yellow';
+            messenge.style.fontSize = '150px';
+            messenge.style.textAlign = 'center';
+            messenge.style.width = `600px`;
+            messenge.style.height = `400px`;
+            messenge.style.transform = 'translate(50%,25%)';
+            document.body.appendChild(messenge);
+
+            let btnOK = document.createElement('button');
+            btnOK.id = 'btnOK';
+            btnOK.textContent = "OK";
+            btnOK.style.width = `100px`;
+            btnOK.style.height = `100px`;
+            btnOK.style.position = 'absolute';
+            btnOK.style.justifySelf = 'center';
+            btnOK.style.fontFamily = 'Forte';
+            btnOK.style.bottom = '0px';
+            btnOK.onclick = () => { messenge.remove(); }
+            document.getElementById('messenge').appendChild(btnOK);
         }
     }
 }
