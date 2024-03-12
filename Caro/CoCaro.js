@@ -1,7 +1,8 @@
+
 let check = true;
 let Length = 30;
-let quantity_square_height = Math.floor((screen.height - Math.round(screen.height*33/100)) / Length);
-let quantity_square_width = Math.floor((screen.width - Math.round(screen.width * 10 / 100)) / Length);
+let quantity_square_height = (screen.height - Math.round(screen.height*35/100)) / Length;
+let quantity_square_width = (screen.width - Math.round(screen.width * 13 / 100)) / Length;
 
 const Caro = {
     init: {
@@ -42,8 +43,8 @@ const Caro = {
             let btnStart = document.createElement('button');
             btnStart.style.fontFamily = 'Forte';
             btnStart.style.fontSize = `${30}px`
-            btnStart.style.width = `${100}px`;
-            btnStart.style.height = `${100}px`;
+            btnStart.style.width = `${Math.round(screen.width * 7 / 100)}px`;
+            btnStart.style.height = `${Math.round(screen.width * 7 / 100)}px`;
             btnStart.textContent = 'Ván mới';
             btnStart.id = 'btnStart';
             btnStart.onclick = () => {
@@ -58,8 +59,8 @@ const Caro = {
             let btnRedo = document.createElement('button');
             btnRedo.style.fontFamily = 'Forte';
             btnRedo.style.fontSize = `${30}px`
-            btnRedo.style.width = `${100}px`;
-            btnRedo.style.height = `${100}px`;
+            btnRedo.style.width = `${Math.round(screen.width * 7 / 100)}px`;
+            btnRedo.style.height = `${Math.round(screen.width * 7 / 100)}px`;
             btnRedo.textContent = 'Lùi lại';
             btnRedo.id = 'btnStart';
             btnRedo.onclick = () => {
