@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "1SXhWfTbeOv2n6slqTQFe4WTm5C6DvxpTM5HNbR3KhciFeEspUKzwUjbstYnO6hb83Ru6xZt3b4Rk9YTxCltXw==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\Khanh\\OneDrive\\Documents\\DoAn1\\DoAn1\\DoAn1.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Khanh\\.nuget\\packages\\guna.ui2.winforms\\2.0.4.2\\guna.ui2.winforms.2.0.4.2.nupkg.sha512"
+  ],
+  "logs": []
+}
